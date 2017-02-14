@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Draw GeoJSON Features and make them 3D</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="OSMBuildings.css" />
+  <link rel="stylesheet" href="GLMap.css">
+  <script src="OSMBuildings-GLMap.js"></script>
+  <script src="GLMap.js"></script>
+
+  <!-- <link rel="stylesheet" href="leaflet-draw/leaflet.draw.css" /> -->
+  <!-- <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script> -->
+  <!-- <script src="OSMBuildings.js"></script> -->
+  <!-- <script src="leaflet-draw/leaflet.draw.js"></script> -->
+  <!-- <script src="OSMBuildings-leaflet.js"></script> -->
+</head>
+<body>
+  <div id="map"></div>
+  <div class="control tilt">
+    <button class="dec">&#8601;</button>
+    <button class="inc">&#8599;</button>
+  </div>
+
+  <div class="control rotation">
+    <button class="inc">&#8630;</button>
+    <button class="dec">&#8631;</button>
+  </div>
+
+  <div class="control zoom">
+    <button class="dec">-</button>
+    <button class="inc">+</button>
+  </div>
+
+  <div class="control bend">
+    <button class="dec">B-</button>
+    <button class="inc">B+</button>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
