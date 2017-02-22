@@ -31,7 +31,7 @@ osmb.addMapTiles(
   attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a> · © Map <a href="http://mapbox.com">MapBox</a>'
 });
 
-osmb.addGeoJSONTiles('map.geojson');
+// osmb.addGeoJSONTiles('map.geojson');
 
 // var now = new Date,
 //   Y = now.getFullYear(),

@@ -4,11 +4,10 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/popety/ciujj7mn9005u2inopkf3ynho',
     // center: [-74.0066, 40.7135],
     // zoom: 15,
-    center: [103.83734351262877, 1.322451890638886],
-    zoom: 15,
-    pitch: 25,
+    center: [103.81808370351791, 1.2909693808854792],
+    zoom: 11,
     // bearing: 17.6,
-    pitch: 90,
+    pitch: 0,
     container: 'map'
 });
 
@@ -17,6 +16,28 @@ var map = new mapboxgl.Map({
 // map.addControl(Draw)
 
 map.on('load', function () {
+
+  map.addLayer({
+    'id': '3d-buildings',
+    'source': 'composite',
+    'source-layer': 'building',
+    'filter': ['==', 'extrude', 'true'],
+    'type': 'fill-extrusion',
+    'minzoom': 14,
+    'paint': {
+        'fill-extrusion-color': '#aaa',
+        'fill-extrusion-height': {
+            'type': 'identity',
+            'property': 'height'
+        },
+        'fill-extrusion-base': {
+            'type': 'identity',
+            'property': 'min_height'
+        },
+        'fill-extrusion-opacity': .6
+    }
+  });
+
   map.addLayer({
       'id': 'sg',
       'type': 'fill-extrusion',
@@ -45,84 +66,114 @@ map.on('load', function () {
               'type': 'identity'
           },
           // Make extrusions slightly opaque for see through indoor walls.
-          'fill-extrusion-opacity': 1
+          'fill-extrusion-opacity': .8
       }
-  });
-
-  map.addLayer({
-    'id': '3d-buildings',
-    'source': 'composite',
-    'source-layer': 'building',
-    'filter': ['==', 'extrude', 'true'],
-    'type': 'fill-extrusion',
-    'minzoom': 15,
-    'paint': {
-        'fill-extrusion-color': '#aaa',
-        'fill-extrusion-height': {
-            'type': 'identity',
-            'property': 'height'
-        },
-        'fill-extrusion-base': {
-            'type': 'identity',
-            'property': 'min_height'
-        },
-        'fill-extrusion-opacity': .6
-    }
   });
 
   // map.setLight({color: "#6ef", intensity: 0.5, position: [1.15, 135, 45]});
 
   // Add a layer showing the places.
-    map.addLayer({
-        "id": "places",
-        "type": "symbol",
-        "source": {
-            "type": "geojson",
-            "data": {
-                "type": "FeatureCollection",
-                "features": [{
-                    "type": "Feature",
-                    "properties": {
-                        "description": "<strong>Make it Mount Pleasant</strong><p><a href=\"http://www.mtpleasantdc.com/makeitmtpleasant\" target=\"_blank\" title=\"Opens in a new window\">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>",
-                        "icon": "marker"
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [103.857549, 1.310113]
-                    }
-                }, {
-                    "type": "Feature",
-                    "properties": {
-                        "description": "<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a <a href=\"http://madmens5finale.eventbrite.com/\" target=\"_blank\" title=\"Opens in a new window\">Mad Men Season Five Finale Watch Party</a>, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>",
-                        "icon": "theatre"
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [-77.003168, 38.894651]
-                    }
-                }]
-            }
-        },
-        "layout": {
-            "icon-image": "{icon}-15",
-            "icon-allow-overlap": true
-        }
-    });
+    // map.addLayer({
+    //     "id": "places",
+    //     "type": "symbol",
+    //     "source": {
+    //         "type": "geojson",
+    //         "data": {
+    //             "type": "FeatureCollection",
+    //             "features": [{
+    //                 "type": "Feature",
+    //                 "properties": {
+    //                     "description": "<strong>Make it Mount Pleasant</strong><p><a href=\"http://www.mtpleasantdc.com/makeitmtpleasant\" target=\"_blank\" title=\"Opens in a new window\">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>",
+    //                     "icon": "marker"
+    //                 },
+    //                 "geometry": {
+    //                   "type": "Polygon",
+    //                   "coordinates": [
+    //                     [
+    //                       [
+    //                         103.81808370351791,
+    //                         1.2909693808854792
+    //                       ],
+    //                       [
+    //                         103.81805956363677,
+    //                         1.2907146356939732
+    //                       ],
+    //                       [
+    //                         103.8185128569603,
+    //                         1.290666368181133
+    //                       ],
+    //                       [
+    //                         103.81853699684143,
+    //                         1.2909237949057208
+    //                       ],
+    //                       [
+    //                         103.81808370351791,
+    //                         1.2909693808854792
+    //                       ]
+    //                     ]
+    //                   ]
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "properties": {
+    //                     "description": "<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a <a href=\"http://madmens5finale.eventbrite.com/\" target=\"_blank\" title=\"Opens in a new window\">Mad Men Season Five Finale Watch Party</a>, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>",
+    //                     "icon": "theatre"
+    //                 },
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-77.003168, 38.894651]
+    //                 }
+    //             }]
+    //         }
+    //     },
+    //     "layout": {
+    //         "icon-image": "{icon}-15",
+    //         "icon-allow-overlap": true
+    //     }
+    // });
 });
 
 // When a click event occurs near a polygon, open a popup at the location of
 // the feature, with description HTML from its properties.
-map.on('click', function (e) {
+// map.on('mousemove', function (e) {
+//
+//   var features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
+//   if (!features.length) return;
+//
+//   console.log(feature);
+//
+//   var feature = features[0];
+//
+//   // Populate the popup and set its coordinates
+//   // based on the feature found.
+//   var popup = new mapboxgl.Popup()
+//       .setLngLat(feature.geometry.coordinates)
+//       .setHTML(feature.properties.description)
+//       .addTo(map);
+// });
 
-  var features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
-  if (!features.length) return;
 
-  var feature = features[0];
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+});
 
-  // Populate the popup and set its coordinates
-  // based on the feature found.
-  var popup = new mapboxgl.Popup()
-      .setLngLat(feature.geometry.coordinates)
-      .setHTML(feature.properties.description)
-      .addTo(map);
+map.on('mousemove', function (e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['sg'] });
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+    if (!features.length) {
+        popup.remove();
+        return;
+    }
+
+    var feature = features[0];
+
+    feature.color = "rgb(193,0,0)";
+
+    popup.setLngLat(map.unproject(e.point))
+        .setHTML("<b>"+feature.properties.propertyName+"</b><br /><img height='50' width='50' src='"+feature.properties.img+"'><br />"+feature.properties.price)
+        .addTo(map);
 });
