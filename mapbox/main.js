@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicG9wZXR5IiwiYSI6ImNpdDlydDEwYzBsMWYydXAyeXhrMHhoamIifQ.9_sT8uJ8zd_6sU0ispPK3w';
 var map = new mapboxgl.Map({
     // style: 'mapbox://styles/mapbox/light-v9',
-    style: 'mapbox://styles/popety/ciujj7mn9005u2inopkf3ynho',
+    style: 'mapbox://styles/popety/cj00j9sfb00ee2smruog37obj',
     // center: [-74.0066, 40.7135],
     // zoom: 15,
     center: [103.81808370351791, 1.2909693808854792],
@@ -17,26 +17,49 @@ var map = new mapboxgl.Map({
 
 map.on('load', function () {
 
-  map.addLayer({
-    'id': '3d-buildings',
-    'source': 'composite',
-    'source-layer': 'building',
-    'filter': ['==', 'extrude', 'true'],
-    'type': 'fill-extrusion',
-    'minzoom': 14,
-    'paint': {
-        'fill-extrusion-color': '#aaa',
-        'fill-extrusion-height': {
-            'type': 'identity',
-            'property': 'height'
-        },
-        'fill-extrusion-base': {
-            'type': 'identity',
-            'property': 'min_height'
-        },
-        'fill-extrusion-opacity': .6
-    }
-  });
+  // map.addLayer({
+  //   'id': '3d-buildings',
+  //   'source': 'composite',
+  //   'source-layer': 'building',
+  //   'filter': ['==', 'extrude', 'true'],
+  //   'type': 'fill-extrusion',
+  //   'minzoom': 12,
+  //   'paint': {
+  //       'fill-extrusion-color': '#aaa',
+  //       'fill-extrusion-height': {
+  //           'type': 'identity',
+  //           'property': 'height'
+  //       },
+  //       'fill-extrusion-base': {
+  //           'type': 'identity',
+  //           'property': 'min_height'
+  //       },
+  //       'fill-extrusion-opacity': .3
+  //   }
+  // });
+
+  // map.addLayer({
+  //           "id": "terrain-data",
+  //           "type": "fill-extrusion",
+  //           "source": {
+  //               type: 'vector',
+  //               url: 'mapbox://mapbox.mapbox-terrain-v2'
+  //           },
+  //           "source-layer": "contour",
+  //           'minzoom': 8,
+  //           'paint': {
+  //             'fill-extrusion-color': {
+  //                "stops": [[0,'#fff'],[8840*0.02,'#7F7F7F'], [8840*0.1,'#232323']],
+  //                "property": "ele",
+  //                "base": 1
+  //            },
+  //               'fill-extrusion-height': {
+  //                   'type': 'identity',
+  //                   'property': 'ele'
+  //               },
+  //               'fill-extrusion-opacity':.6
+  //           }
+  //       });
 
   map.addLayer({
       'id': 'sg',
@@ -66,7 +89,7 @@ map.on('load', function () {
               'type': 'identity'
           },
           // Make extrusions slightly opaque for see through indoor walls.
-          'fill-extrusion-opacity': .8
+          'fill-extrusion-opacity': .5
       }
   });
 
@@ -159,7 +182,7 @@ var popup = new mapboxgl.Popup({
     closeOnClick: false
 });
 
-map.on('mousemove', function (e) {
+map.on('click', function (e) {
     var features = map.queryRenderedFeatures(e.point, { layers: ['sg'] });
     // Change the cursor style as a UI indicator.
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
@@ -171,9 +194,10 @@ map.on('mousemove', function (e) {
 
     var feature = features[0];
 
-    feature.color = "rgb(193,0,0)";
-
     popup.setLngLat(map.unproject(e.point))
-        .setHTML("<b>"+feature.properties.propertyName+"</b><br /><img height='50' width='50' src='"+feature.properties.img+"'><br />"+feature.properties.price)
+        .setHTML("<b>"+feature.properties.osm_id+"</b>")
         .addTo(map);
 });
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
