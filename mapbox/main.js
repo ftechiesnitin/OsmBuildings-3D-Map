@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicG9wZXR5IiwiYSI6ImNpdDlydDEwYzBsMWYydXAyeXhrMHhoamIifQ.9_sT8uJ8zd_6sU0ispPK3w';
 var map = new mapboxgl.Map({
     // style: 'mapbox://styles/mapbox/light-v9',
-    style: 'mapbox://styles/popety/cj00j9sfb00ee2smruog37obj',
+    style: 'mapbox://styles/popety/cj027vv1700242snyh2hispm3',
     // center: [-74.0066, 40.7135],
     // zoom: 15,
     center: [103.81808370351791, 1.2909693808854792],
@@ -68,16 +68,12 @@ map.on('load', function () {
           // Geojson Data source used in vector tiles, documented at
           // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
           'type': 'geojson',
-          'data': 'map.geojson'
+          'data': 'interlace.geojson'
       },
       'paint': {
           // See the Mapbox Style Spec for details on property functions
           // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
-          'fill-extrusion-color': {
-              // Get the fill-extrusion-color from the source 'color' property.
-              'property': 'color',
-              'type': 'identity'
-          },
+          'fill-extrusion-color': '#FDD035',
           'fill-extrusion-height': {
               // Get fill-extrusion-height from the source 'height' property.
               'property': 'height',
@@ -89,8 +85,37 @@ map.on('load', function () {
               'type': 'identity'
           },
           // Make extrusions slightly opaque for see through indoor walls.
-          'fill-extrusion-opacity': .5
+          'fill-extrusion-opacity': 1
       }
+  });
+
+  map.addLayer({
+      'id': 'sg-hover',
+      'type': 'fill-extrusion',
+      'source': {
+          // Geojson Data source used in vector tiles, documented at
+          // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+          'type': 'geojson',
+          'data': 'interlace.geojson'
+      },
+      'paint': {
+          // See the Mapbox Style Spec for details on property functions
+          // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
+          'fill-extrusion-color': '#ffffff',
+          'fill-extrusion-height': {
+              // Get fill-extrusion-height from the source 'height' property.
+              'property': 'height',
+              'type': 'identity'
+          },
+          'fill-extrusion-base': {
+              // Get fill-extrusion-base from the source 'base_height' property.
+              'property': 'base_height',
+              'type': 'identity'
+          },
+          // Make extrusions slightly opaque for see through indoor walls.
+          'fill-extrusion-opacity': 1
+      },
+      "filter": ["==", "base_height", ""]
   });
 
   // map.setLight({color: "#6ef", intensity: 0.5, position: [1.15, 135, 45]});
@@ -194,8 +219,10 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
+    map.setFilter("sg-hover", ["==", "base_height", feature.properties.base_height]);
+
     popup.setLngLat(map.unproject(e.point))
-        .setHTML("<b>"+feature.properties.osm_id+"</b>")
+        .setHTML("<b>"+feature.properties.base_height+"</b>")
         .addTo(map);
 });
 
