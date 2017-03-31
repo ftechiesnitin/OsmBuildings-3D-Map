@@ -71,24 +71,25 @@ map.on('load', function () {
           'data': 'map.geojson'
       },
       'paint': {
-          // See the Mapbox Style Spec for details on property functions
-          // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
-          'fill-extrusion-color': {
-              // Get the fill-extrusion-color from the source 'color' property.
-              'property': 'color',
-              'type': 'identity'
-          },
-          'fill-extrusion-height': {
-              // Get fill-extrusion-height from the source 'height' property.
-              'property': 'height',
-              'type': 'identity'
-          },
-          'fill-extrusion-base': {
-              // Get fill-extrusion-base from the source 'base_height' property.
-              'property': 'base_height',
-              'type': 'identity'
-          },
+          // // See the Mapbox Style Spec for details on property functions
+          // // https://www.mapbox.com/mapbox-gl-style-spec/#types-function
+          // 'fill-extrusion-color': {
+          //     // Get the fill-extrusion-color from the source 'color' property.
+          //     'property': 'color',
+          //     'type': 'identity'
+          // },
+          // 'fill-extrusion-height': {
+          //     // Get fill-extrusion-height from the source 'height' property.
+          //     'property': 'height',
+          //     'type': 'identity'
+          // },
+          // 'fill-extrusion-base': {
+          //     // Get fill-extrusion-base from the source 'base_height' property.
+          //     'property': 'base_height',
+          //     'type': 'identity'
+          // },
           // Make extrusions slightly opaque for see through indoor walls.
+          'fill-extrusion-color': '#CC0000',
           'fill-extrusion-opacity': .5
       }
   });
